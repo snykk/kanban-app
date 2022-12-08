@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{template "general/header"}}
+  </head>
+  <body>
+    <div class="h-screen font-sans bg-[url('https://gitlab.com/snykk/fp/-/raw/main/bg-1.jpg')] bg-no-repeat bg-cover bg-center">
+      <div class="container mx-auto h-full flex flex-1 justify-center items-center">
+        <div class="w-full max-w-lg">
+          <div class="leading-loose">
+            <h1 class="text-white text-center text-lg font-bold">Register</h1>
+            <form class="max-w m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl" action="/register/process" method="post">
+              <div class="mb-2">
+                <label class="block text-sm text-white" for="fullname">Full Name</label>
+                <input class="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white" type="text" id="fullname" name="fullname" placeholder="Please insert your fullname" aria-label="fullname" required />
+              </div>
+              <div class="mb-2">
+                <label class="block text-sm text-white" for="email">Email Address</label>
+                <input class="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white" type="email" id="email" name="email" placeholder="Please insert your active email address" aria-label="email" required />
+              </div>
+              <div class="mb-4">
+                <label class="block text-sm text-white">Password</label>
+                <input class="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white" type="password" id="password" name="password" placeholder="Please insert your password" arial-label="password" required />
+              </div>
+
+              <div class="items-center flex justify-between">
+                <button class="px-4 py-[1px] text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded" type="submit">Sign Up</button>
+                <a class="inline-block right-0 align-baseline font-bold text-sm text-500 text-white hover:text-blue-400" href="/login">already have an account?</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

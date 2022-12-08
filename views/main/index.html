@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{template "general/header"}}
+    <style>
+      .group:hover .group-hover\:flex {
+        display: flex !important;
+      }
+      html {
+        scroll-padding-top: calc(4.5rem - 1px) !important;
+      }
+
+      body {
+        letter-spacing: 0.0625em !important;
+      }
+      .masthead {
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 35rem;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 75%, #000 100%), url("https://gitlab.com/snykk/fp/-/raw/main/bg-1.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+      .masthead h1 {
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .masthead h2 {
+        background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.6));
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <header class="masthead">
+        <div class="container px-4 px-lg-5 flex justify-center h-[100vh]">
+          <div class="flex justify-center">
+            <div class="text-center">
+              <h1 class="mx-auto my-0 uppercase text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[8rem] mt-[35vh] sm:mt-[30vh] md:mt-[25vh] lg:mt-[15vh]">kanban app</h1>
+              <h2
+                class="text-white mx-auto mt-1 mb-4 text-[0.5rem] leading-[0.60rem] max-w-[13rem] sm:text-[0.65rem] sm:leading-[0.75rem] sm:max-w-[17rem] md:text-[0.75rem] md:leading-[0.9rem] md:max-w-[25rem] lg:text-[1.25rem] lg:leading-[1.2rem] lg:max-w-[35rem] lg:mt-0 lg:mb-10"
+              >
+                Welcome to kanban app. A great way to visualize work and enhance your personal productivity
+              </h2>
+              <a class="text-sm px-3 py-1 sm:px-5 md:px-7 sm:py-2 md:py-3 lg:text-xl lg:px-10 lg:py-4 text-white bg-[#64a19d] rounded-lg hover:bg-[#558985] hover:border-[#50817e] mr-2" href="/register">Regis</a>
+              <a class="text-sm px-3 py-1 sm:px-5 md:px-7 sm:py-2 md:py-3 lg:text-xl lg:px-10 lg:py-4 text-white bg-[#64a19d] rounded-lg hover:bg-[#558985] hover:border-[#50817e]" href="/login">Login</a>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- <h1>Welcome to kanban app</h1>
+      <a href="/login">login</a>
+
+      <a href="/register">Register</a> -->
+    </div>
+  </body>
+</html>

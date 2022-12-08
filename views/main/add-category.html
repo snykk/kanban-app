@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{template "general/header"}}
+  </head>
+  <body>
+    <div
+      id="background"
+      class="flex flex-col w-screen h-screen bg-no-repeat bg-cover bg-center text-slate-800"
+      style="background-image: url('https://gitlab.com/snykk/fp/-/raw/main/bg-3.jpg'); transition: background-image 4s; transition-delay: 5s"
+    >
+      <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-[0.80]">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 text-indigo-600 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+            />
+          </svg>
+          <div class="ml-2">
+            <h1 class="text-2xl font-bold">Kanban App</h1>
+          </div>
+        </div>
+        <div class="flex items-center justify-center w-40 h-8 ml-auto">
+          <a href="/dashboard" class="bg-white bg-opacity-[0] hover:bg-opacity-[0.40] text-gray-800 font-bold px-6 py-2 rounded-lg ml-auto cursor-pointer mr-2 transition duration-300">Dashboard</a>
+          <a href="/logout" class="bg-zinc-600 hover:bg-zinc-900 text-white px-6 py-2 rounded-lg ml-auto cursor-pointer font-bold">Logout </a>
+        </div>
+      </div>
+
+      <div class="flex flex-col w-screen h-screen overflow-auto text-gray-700 bg-gradient-to-tr">
+        <div class="container mx-auto h-full flex flex-1 justify-center items-center">
+          <div class="w-full max-w-lg">
+            <div class="">
+              <form class="max-w-sm mx-auto m-4 p-10 bg-white bg-opacity-80 rounded shadow-xl" method="POST" action="/category/create">
+                <h1 class="text-black text-center text-lg font-bold">Add new Category</h1>
+                <div class="mb-2">
+                  <label class="block text-md text-black" for="title">Title</label>
+                  <input class="w-full px-5 py-1 text-gray-black bg-white rounded focus:outline focus:outline-offset-1 focus:outline-pink-500" type="text" id="title" name="type" placeholder="Please insert category title" required />
+                </div>
+                <div class="items-center flex justify-between">
+                  <a href="/dashboard" class="bg-red-600 hover:bg-red-900 text-white text-xs px-6 py-2 mt-4 rounded-lg">Cancel </a>
+                  <button type="submit" class="px-6 py-2 mt-4 text-white text-xs bg-blue-600 rounded-lg hover:bg-blue-900">Add Category</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var minimum = 1;
+      var maximum = 14;
+      var oldRandomNum = 0;
+
+      function setImage() {
+        while (true) {
+          var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+          if (randomnumber != oldRandomNum) {
+            var image = document.getElementById("background");
+            image.style.background = `url('https://gitlab.com/snykk/fp/-/raw/main/bg-${randomnumber}.jpg')`;
+            image.style.backgroundRepeat = "no-repeat";
+            image.style.backgroundPosition = "center";
+            image.style.backgroundSize = "cover";
+            oldRandomNum = randomnumber;
+
+            break;
+          }
+        }
+      }
+
+      setImage();
+
+      setInterval(setImage, 60000);
+    </script>
+  </body>
+</html>

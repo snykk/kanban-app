@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{template "general/header"}}
+  </head>
+  <body>
+    <div
+      id="background"
+      class="flex flex-col w-screen h-screen bg-no-repeat bg-cover bg-center text-slate-800"
+      style="background-image: url('https://gitlab.com/snykk/fp/-/raw/main/bg-3.jpg'); transition: background-image 4s; transition-delay: 5s"
+    >
+      <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-[0.80]">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 text-indigo-600 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+            />
+          </svg>
+          <div class="ml-2">
+            <h1 class="text-2xl font-bold">Kanban App</h1>
+          </div>
+        </div>
+        <div class="flex items-center justify-center w-8 h-8 ml-auto">
+          <a href="/logout" class="bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-lg ml-auto cursor-pointer font-bold">Logout </a>
+        </div>
+      </div>
+
+      <div class="flex flex-grow mt-4 space-x-6 overflow-auto px-4 sm:8 md:px-10 lg:px-30">
+        {{ range $val1 := .categories }}
+        <!-- each category -->
+        <div class="flex flex-col flex-shrink-0 w-72">
+          <div class="flex justify-between items-center flex-shrink-0 h-10 px-2">
+            <div class="flex items-center justify-between max-w-content bg-white rounded-lg bg-opacity-90 px-2 py-[1px] cursor-pointer">
+              <svg style="width: 20px; height: 20px; margin-right: 3px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
+              {{ .Type }}
+            </div>
+            <div class="flex flex-between bg-white rounded-lg bg-opacity-90">
+              <a href="/task/add?category={{ $val1.ID }}" class="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </a>
+
+              <a href="/category/delete?category_id={{ $val1.ID }}" class="flex items-center justify-center w-6 h-6 ml-auto text-red-500 rounded hover:bg-red-500 hover:text-red-100">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div class="flex flex-col pb-2 overflow-auto">
+            <!-- each task in category -->
+            {{ range $val2 := .Tasks}}
+            <div class="relative flex justify-between flex-col p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
+              <form method="POST" action="/task/delete?task_id={{ $val2.ID }}" class="flex items-center">
+                <a href="/task/update?task_id={{ $val2.ID }}" class="absolute top-0 right-0 flex items-center justify-center hidden w-5 h-5 mt-3 mr-8 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex"
+                  ><svg style="width: 16px; height: 16px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                    /></svg
+                ></a>
+                <button class="absolute top-0 right-0 flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
+                  <svg style="width: 16px; height: 16px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    />
+                  </svg>
+                </button>
+              </form>
+              <h2 class="text-lg font-medium">{{ $val2.Title }}</h2>
+              <h4 class="mt-3 text-sm font-medium">{{ $val2.Description }}</h4>
+              <div class="flex justify-end mt-2">
+                <a href="/task/update/process?task_id={{ $val2.ID }}&category_id={{ categoryDec $val1.ID }}" class="transition hover:translate-x-[-0.25rem] hover:scale-105 duration-300 mr-4">
+                  <button class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:text-gray-700 group-hover:flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                    </svg>
+                  </button>
+                </a>
+                <a href="/task/update/process?task_id={{ $val2.ID }}&category_id={{ categoryInc $val1.ID }}" class="transition hover:translate-x-[0.25rem] hover:scale-105 duration-300">
+                  <button class="flex items-center justify-center hidden w-5 h-5 mt-3 mr-4 text-gray-500 rounded hover:text-gray-700 group-hover:flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                    </svg>
+                  </button>
+                </a>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+
+        <!-- add new category -->
+        <div class="flex flex-col flex-shrink-0 w-72">
+          <div class="flex items-center flex-shrink-0 h-10 px-2">
+            <a href="/category/add" class="flex items-center flex-start py-3 px-6 rounded-lg ml-auto cursor-pointer bg-blue-600 text-white">
+              <span class="mr-1"
+                ><svg width="16px" height="16px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </span>
+              <span class="text-md">add Category</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var minimum = 1;
+      var maximum = 14;
+      var oldRandomNum = 0;
+
+      function setImage() {
+        while (true) {
+          var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+          if (randomnumber != oldRandomNum) {
+            var image = document.getElementById("background");
+            image.style.background = `url('https://gitlab.com/snykk/fp/-/raw/main/bg-${randomnumber}.jpg')`;
+            image.style.backgroundRepeat = "no-repeat";
+            image.style.backgroundPosition = "center";
+            image.style.backgroundSize = "cover";
+            oldRandomNum = randomnumber;
+
+            break;
+          }
+        }
+      }
+
+      setImage();
+
+      setInterval(setImage, 60000);
+    </script>
+  </body>
+</html>
