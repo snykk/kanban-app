@@ -4,12 +4,8 @@
     {{template "general/header"}}
   </head>
   <body>
-    <div
-      id="background"
-      class="flex flex-col w-screen h-screen bg-no-repeat bg-cover bg-center text-slate-800"
-      style="background-image: url('https://gitlab.com/snykk/fp/-/raw/main/bg-3.jpg'); transition: background-image 4s; transition-delay: 5s"
-    >
-      <div class="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-[0.80]">
+    <div id="background" class="flex flex-col w-screen h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
+      <div class="flex items-center flex-shrink-0 w-full h-16 px-10">
         <div class="flex items-center">
           <svg class="w-8 h-8 text-indigo-600 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -20,11 +16,23 @@
             />
           </svg>
           <div class="ml-2">
-            <h1 class="text-2xl font-bold">Kanban App</h1>
+            <h1 class="text-md sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-white text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600">Kanban App</h1>
           </div>
         </div>
-        <div class="flex items-center justify-center w-8 h-8 ml-auto">
-          <a href="/logout" class="bg-red-500 hover:bg-red-700 text-white px-6 py-2 rounded-lg ml-auto cursor-pointer font-bold">Logout </a>
+        <div class="flex items-center justify-center w-30 h-8 ml-auto">
+          <button
+            type="button"
+            class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900 transition-all ease-in duration-150"
+          >
+            Hello,
+          </button>
+
+          <a
+            href="/logout"
+            class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+          >
+            <span class="relative px-5 py-2 transition-all ease-in duration-300 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"> Logout </span>
+          </a>
         </div>
       </div>
 
@@ -33,19 +41,15 @@
         <!-- each category -->
         <div class="flex flex-col flex-shrink-0 w-72">
           <div class="flex justify-between items-center flex-shrink-0 h-10 px-2">
-            <div class="flex items-center justify-between max-w-content bg-white rounded-lg bg-opacity-90 px-2 py-[1px] cursor-pointer">
-              <svg style="width: 20px; height: 20px; margin-right: 3px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                />
+            <div class="flex items-center justify-between font-rubik max-w-content rounded-lg bg-opacity-90 px-2 py-[1px] cursor-pointer text-white hover:scale-110 transition-all duration-300">
+              <svg width="24px" stroke-width="1.5" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 6h11M3.8 5.8l.8.8 2-2M3.8 11.8l.8.8 2-2M3.8 17.8l.8.8 2-2M9 12h11M9 18h11" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
-              {{ .Type }}
+              <span class="hover:rotate-2 ml-1 transition-all duration-500 text-shadow-md text--shadow">{{ .Type }}</span>
             </div>
-            <div class="flex flex-between bg-white rounded-lg bg-opacity-90">
+            <div class="flex flex-between rounded-lg bg-opacity-90">
               <a href="/task/add?category={{ $val1.ID }}" class="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
               </a>
@@ -63,7 +67,7 @@
           <div class="flex flex-col pb-2 overflow-auto">
             <!-- each task in category -->
             {{ range $val2 := .Tasks}}
-            <div class="relative flex justify-between flex-col p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100" draggable="true">
+            <div class="relative flex justify-between flex-col p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 drop-shadow-2xl shadow-blue-400" draggable="true">
               <form method="POST" action="/task/delete?task_id={{ $val2.ID }}" class="flex items-center">
                 <a href="/task/update?task_id={{ $val2.ID }}" class="absolute top-0 right-0 flex items-center justify-center hidden w-5 h-5 mt-3 mr-8 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex"
                   ><svg style="width: 16px; height: 16px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -110,7 +114,10 @@
         <!-- add new category -->
         <div class="flex flex-col flex-shrink-0 w-72">
           <div class="flex items-center flex-shrink-0 h-10 px-2">
-            <a href="/category/add" class="flex items-center flex-start py-3 px-6 rounded-lg ml-auto cursor-pointer bg-blue-600 text-white">
+            <a
+              href="/category/add"
+              class="flex items-center flex-start py-3 px-6 rounded-lg ml-auto cursor-pointer bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium"
+            >
               <span class="mr-1"
                 ><svg width="16px" height="16px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -122,30 +129,5 @@
         </div>
       </div>
     </div>
-    <script>
-      var minimum = 1;
-      var maximum = 14;
-      var oldRandomNum = 0;
-
-      function setImage() {
-        while (true) {
-          var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-          if (randomnumber != oldRandomNum) {
-            var image = document.getElementById("background");
-            image.style.background = `url('https://gitlab.com/snykk/fp/-/raw/main/bg-${randomnumber}.jpg')`;
-            image.style.backgroundRepeat = "no-repeat";
-            image.style.backgroundPosition = "center";
-            image.style.backgroundSize = "cover";
-            oldRandomNum = randomnumber;
-
-            break;
-          }
-        }
-      }
-
-      setImage();
-
-      setInterval(setImage, 60000);
-    </script>
   </body>
 </html>

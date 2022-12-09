@@ -27,7 +27,7 @@ func NewTaskRepository(db *gorm.DB) TaskRepository {
 
 func (r *taskRepository) GetTasks(ctx context.Context, id int) ([]entity.Task, error) {
 	var tasks []entity.Task
-	err := r.db.WithContext(ctx).Find(&tasks).Error
+	err := r.db.WithContext(ctx).Where("user_id = ?", id).Find(&tasks).Error
 	return tasks, err
 }
 

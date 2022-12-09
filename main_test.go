@@ -743,7 +743,7 @@ var _ = Describe("TestWebHandler", Ordered, func() {
 				clientHandler.ServeHTTP(w, r)
 
 				Expect(w.Result().StatusCode).To(Equal(http.StatusOK))
-				Expect(w.Body.String()).To(ContainSubstring("Welcome to kanban app"))
+				Expect(w.Body.String()).To(ContainSubstring("Kanban App"))
 			})
 		})
 	})

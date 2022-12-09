@@ -79,7 +79,8 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userId := r.Context().Value("id")
+	userId := r.Context().Value("id").(string)
+	userIdInt, _ := strconv.Atoi(userId)
 	if userId == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(entity.NewErrorResponse("invalid user id"))
@@ -90,6 +91,7 @@ func (t *taskAPI) CreateNewTask(w http.ResponseWriter, r *http.Request) {
 		Title:       task.Title,
 		Description: task.Description,
 		CategoryID:  task.CategoryID,
+		UserID:      userIdInt,
 	}
 	createdTask, err := t.taskService.StoreTask(r.Context(), &entityTask)
 	if err != nil {
