@@ -10,4 +10,8 @@ require (
 	gorm.io/gorm v1.24.1-0.20221019064659-5dd2bb482755
 )
 
-require github.com/jackc/pgx/v4 v4.17.2
+require (
+	github.com/jackc/pgx/v4 v4.17.2
+	github.com/spf13/viper v1.14.0
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
+)

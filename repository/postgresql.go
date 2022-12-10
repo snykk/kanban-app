@@ -1,8 +1,9 @@
-package utils
+package repository
 
 import (
-	"os"
+	"fmt"
 
+	"github.com/snykk/kanban-app/config"
 	"github.com/snykk/kanban-app/entity"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
@@ -12,11 +13,21 @@ import (
 
 var db *gorm.DB
 
+const ENV_PRODUCTION = "production"
+const ENV_DEVELOPMENT = "development"
+
 func ConnectDB() error {
+	var dsn string
+	if config.AppConfig.Environment == ENV_DEVELOPMENT {
+		dsn = fmt.Sprintf("postgres://%s:%s@%s:%d/%s", config.AppConfig.DBUsername, config.AppConfig.DBPassword, config.AppConfig.DBHost, config.AppConfig.DBPort, config.AppConfig.DBDatabase)
+	} else if config.AppConfig.Environment == ENV_PRODUCTION {
+		dsn = config.AppConfig.DBDsn
+	}
+
 	// connect using gorm pgx
 	conn, err := gorm.Open(postgres.New(postgres.Config{
 		DriverName: "pgx",
-		DSN:        os.Getenv("DATABASE_URL"),
+		DSN:        dsn,
 	}), &gorm.Config{})
 	if err != nil {
 		return err

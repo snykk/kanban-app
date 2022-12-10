@@ -3,17 +3,17 @@ package main
 import (
 	"embed"
 	"fmt"
+	"log"
 	"net/http"
-	"os"
 	"sync"
 
 	"github.com/snykk/kanban-app/client"
+	"github.com/snykk/kanban-app/config"
 	"github.com/snykk/kanban-app/handler/api"
 	"github.com/snykk/kanban-app/handler/web"
 	"github.com/snykk/kanban-app/middleware"
 	"github.com/snykk/kanban-app/repository"
 	"github.com/snykk/kanban-app/service"
-	"github.com/snykk/kanban-app/utils"
 
 	_ "github.com/lib/pq"
 	"gorm.io/gorm"
@@ -35,9 +35,14 @@ type ClientHandler struct {
 //go:embed views/*
 var Resources embed.FS
 
-func main() {
-	os.Setenv("DATABASE_URL", "postgres://postgres:12345678@localhost:5432/kanban_app")
+func init() {
+	if err := config.InitializeAppConfig(); err != nil {
+		log.Fatalln(err)
+	}
 
+}
+
+func main() {
 	wg := sync.WaitGroup{}
 
 	wg.Add(1)
@@ -46,18 +51,18 @@ func main() {
 
 		mux := http.NewServeMux()
 
-		err := utils.ConnectDB()
+		err := repository.ConnectDB()
 		if err != nil {
 			panic(err)
 		}
 
-		db := utils.GetDBConnection()
+		db := repository.GetDBConnection()
 
 		mux = RunServer(db, mux)
 		mux = RunClient(mux, Resources)
 
 		fmt.Println("Server is running on port 8080")
-		err = http.ListenAndServe(":8080", mux)
+		err = http.ListenAndServe(fmt.Sprintf(":%d", config.AppConfig.Port), mux)
 		if err != nil {
 			panic(err)
 		}

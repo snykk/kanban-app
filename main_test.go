@@ -11,7 +11,7 @@ import (
 
 	main "github.com/snykk/kanban-app"
 	"github.com/snykk/kanban-app/entity"
-	"github.com/snykk/kanban-app/utils"
+	"github.com/snykk/kanban-app/repository"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 	. "github.com/onsi/ginkgo/v2"
@@ -690,12 +690,12 @@ var _ = Describe("TestWebHandler", Ordered, func() {
 	var userClientID int
 
 	BeforeAll(func() {
-		err := utils.ConnectDB()
+		err := repository.ConnectDB()
 		if err != nil {
 			panic(err)
 		}
 
-		db = utils.GetDBConnection()
+		db = repository.GetDBConnection()
 
 		clientHandler = http.NewServeMux()
 

@@ -105,6 +105,12 @@ func (u *userAPI) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(user.Password) < 5 {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("password must be atleast 6 character"))
+		return
+	}
+
 	entityUser := entity.User{
 		Fullname: user.Fullname,
 		Email:    user.Email,

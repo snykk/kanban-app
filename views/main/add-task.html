@@ -1,46 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- {{template "general/header"}} -->
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <!-- rubik spray paint -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Spray+Paint&display=swap" rel="stylesheet" />
-    <title>Kanban App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="jquery-3.6.0.min.js"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          container: {
-            center: true,
-            padding: "2rem",
-            width: "100%",
-          },
-          fontFamily: {
-            rubik: ["Rubik Spray Paint", "cursive"],
-          },
-          table: {},
-        },
-        variants: {
-          extend: {
-            backgroundColor: ["even"],
-          },
-        },
-      };
-    </script>
-    <style>
-      .group:hover .group-hover\:flex {
-        display: flex !important;
-      }
-      .text--shadow:hover {
-        text-shadow: -6px -1px 10px rgb(118, 0, 245);
-      }
-    </style>
+    {{template "general/header"}}
   </head>
   <body>
     <div id="background" class="flex flex-col w-screen h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
