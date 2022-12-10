@@ -18,11 +18,15 @@ type DashboardWeb interface {
 
 type dashboardWeb struct {
 	categoryClient client.CategoryClient
+	userClient     client.UserClient
 	embed          embed.FS
 }
 
-func NewDashboardWeb(catClient client.CategoryClient, embed embed.FS) *dashboardWeb {
-	return &dashboardWeb{catClient, embed}
+func NewDashboardWeb(catClient client.CategoryClient, uClient client.UserClient, emb embed.FS) *dashboardWeb {
+	return &dashboardWeb{
+		categoryClient: catClient,
+		userClient:     uClient,
+		embed:          emb}
 }
 
 func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
@@ -35,13 +39,21 @@ func (d *dashboardWeb) Dashboard(w http.ResponseWriter, r *http.Request) {
 
 	categories, err := d.categoryClient.GetCategories(userId)
 	if err != nil {
-		log.Println("error get cat: ", err.Error())
+		log.Println("error get category data: ", err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	users, err := d.userClient.GetUserById(userId)
+	if err != nil {
+		log.Println("error get user data: ", err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	var dataTemplate = map[string]interface{}{
 		"categories": categories,
+		"users":      users,
 	}
 
 	var getIndexByCategoryId = func(catId int) int {

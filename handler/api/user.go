@@ -17,6 +17,7 @@ type UserAPI interface {
 	Register(w http.ResponseWriter, r *http.Request)
 	Logout(w http.ResponseWriter, r *http.Request)
 
+	GetUserById(w http.ResponseWriter, r *http.Request)
 	Delete(w http.ResponseWriter, r *http.Request)
 }
 
@@ -26,6 +27,21 @@ type userAPI struct {
 
 func NewUserAPI(userService service.UserService) *userAPI {
 	return &userAPI{userService}
+}
+
+func (t *userAPI) GetUserById(w http.ResponseWriter, r *http.Request) {
+	userId := r.URL.Query().Get("user_id")
+	userIdInt, _ := strconv.Atoi(userId)
+
+	user, err := t.userService.GetUserById(r.Context(), userIdInt)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println(err.Error())
+		json.NewEncoder(w).Encode(entity.NewErrorResponse("error internal server"))
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(user)
 }
 
 func (u *userAPI) Login(w http.ResponseWriter, r *http.Request) {

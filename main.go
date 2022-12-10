@@ -88,6 +88,7 @@ func RunServer(db *gorm.DB, mux *http.ServeMux) *http.ServeMux {
 	MuxRoute(mux, "POST", "/api/v1/users/login", middleware.Post(http.HandlerFunc(apiHandler.UserAPIHandler.Login)))
 	MuxRoute(mux, "POST", "/api/v1/users/register", middleware.Post(http.HandlerFunc(apiHandler.UserAPIHandler.Register)))
 	MuxRoute(mux, "POST", "/api/v1/users/logout", middleware.Post(http.HandlerFunc(apiHandler.UserAPIHandler.Logout)))
+	MuxRoute(mux, "GET", "/api/v1/users/get", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.UserAPIHandler.GetUserById))), "?user_id=")
 	MuxRoute(mux, "DELETE", "/api/v1/users/delete", middleware.Delete(http.HandlerFunc(apiHandler.UserAPIHandler.Delete)), "?user_id=")
 
 	MuxRoute(mux, "GET", "/api/v1/tasks/get", middleware.Get(middleware.Auth(http.HandlerFunc(apiHandler.TaskAPIHandler.GetTask))), "?task_id=")
@@ -110,7 +111,7 @@ func RunClient(mux *http.ServeMux, embed embed.FS) *http.ServeMux {
 	taskClient := client.NewTaskClient()
 
 	authWeb := web.NewAuthWeb(userClient, embed)
-	dashboardWeb := web.NewDashboardWeb(categoryClient, embed)
+	dashboardWeb := web.NewDashboardWeb(categoryClient, userClient, embed)
 	modifyWeb := web.NewModifyWeb(taskClient, categoryClient, embed)
 	homeWeb := web.NewHomeWeb(embed)
 

@@ -7,12 +7,14 @@ import (
 	"net/http"
 
 	"github.com/snykk/kanban-app/config"
+	"github.com/snykk/kanban-app/entity"
 )
 
 type UserClient interface {
 	Login(email, password string) (userId int, respCode int, err error)
 	Register(fullname, email, password string) (userId int, respCode int, err error)
 
+	GetUserById(userID string) (entity.User, error)
 	DeleteUser(userId string) (respCode int, err error)
 }
 
@@ -110,6 +112,33 @@ func (u *userClient) Register(fullname, email, password string) (userId int, res
 			return 0, resp.StatusCode, nil
 		}
 	}
+}
+
+func (u *userClient) GetUserById(userID string) (entity.User, error) {
+	client, err := GetClientWithCookie(userID)
+	if err != nil {
+		return entity.User{}, err
+	}
+
+	req, err := http.NewRequest("GET", config.SetUrl("/api/v1/users/get?user_id="+userID), nil)
+	if err != nil {
+		return entity.User{}, err
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return entity.User{}, err
+	}
+
+	defer resp.Body.Close()
+
+	var user entity.User
+	err = json.NewDecoder(resp.Body).Decode(&user)
+	if err != nil {
+		return entity.User{}, err
+	}
+
+	return user, nil
 }
 
 func (u *userClient) DeleteUser(userId string) (respCode int, err error) {
