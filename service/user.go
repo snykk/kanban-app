@@ -7,6 +7,7 @@ import (
 
 	"github.com/snykk/kanban-app/entity"
 	"github.com/snykk/kanban-app/repository"
+	"github.com/snykk/kanban-app/utils"
 )
 
 type UserService interface {
@@ -42,7 +43,7 @@ func (s *userService) Login(ctx context.Context, user *entity.User) (id int, err
 		return 0, errors.New("user not found")
 	}
 
-	if user.Password != dbUser.Password {
+	if !utils.ValidateHash(user.Password, dbUser.Password) {
 		return 0, errors.New("wrong email or password")
 	}
 
@@ -57,6 +58,11 @@ func (s *userService) Register(ctx context.Context, user *entity.User) (entity.U
 
 	if dbUser.Email != "" || dbUser.ID != 0 {
 		return *user, errors.New("email already exists")
+	}
+
+	user.Password, err = utils.GenerateHash(user.Password)
+	if err != nil {
+		return *user, err
 	}
 
 	user.CreatedAt = time.Now()
