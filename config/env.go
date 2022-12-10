@@ -13,6 +13,7 @@ type Config struct {
 	Port        int
 	Environment string
 	Debug       bool
+	BaseURL     string
 
 	DBHost     string
 	DBPort     int
@@ -49,6 +50,7 @@ func InitializeAppConfig() error {
 	AppConfig.Port = viper.GetInt("PORT")
 	AppConfig.Environment = viper.GetString("ENVIRONMENT")
 	AppConfig.Debug = viper.GetBool("DEBUG")
+	AppConfig.BaseURL = viper.GetString("BASE_URL")
 
 	AppConfig.DBHost = viper.GetString("DB_HOST")
 	AppConfig.DBPort = viper.GetInt("DB_PORT")
@@ -58,7 +60,7 @@ func InitializeAppConfig() error {
 	AppConfig.DBDsn = viper.GetString("DB_DSN")
 
 	// check
-	if AppConfig.Port == 0 || AppConfig.Environment == "" {
+	if AppConfig.Port == 0 || AppConfig.Environment == "" || AppConfig.BaseURL == "" {
 		return ERRORS_EMPTY_ENV
 	}
 

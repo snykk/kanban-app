@@ -61,7 +61,7 @@ func main() {
 		mux = RunServer(db, mux)
 		mux = RunClient(mux, Resources)
 
-		fmt.Println("Server is running on port 8080")
+		fmt.Printf("Server is running on port %d", config.AppConfig.Port)
 		err = http.ListenAndServe(fmt.Sprintf(":%d", config.AppConfig.Port), mux)
 		if err != nil {
 			panic(err)
