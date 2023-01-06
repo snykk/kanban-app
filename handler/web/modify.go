@@ -153,7 +153,7 @@ func (a *modifyWeb) UpdateTaskProcess(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if respCode == 201 {
+		if respCode == 200 {
 			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 		} else {
 			http.Redirect(w, r, "/task/update?task_id="+taskId, http.StatusSeeOther)
